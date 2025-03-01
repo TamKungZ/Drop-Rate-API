@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DropRate Mod JavaDocs</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        h1, h2 { color: #2c3e50; }
+        code { background-color: #f4f4f4; padding: 2px 5px; display: block; white-space: pre; }
+        .container { max-width: 900px; margin: 20px auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DropRate Mod JavaDocs</h1>
+        
+        <h2>How to Use</h2>
+        <p>The DropRate Mod allows you to configure drop rates for various entities in Minecraft. Below is an example of how to register a custom drop rate:</p>
+        <code>
+// Example Usage
+import th.tamkungz.droprate.api.DropRateAPI;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraftforge.registries.ForgeRegistries;
+import java.util.Arrays;
+import java.util.List;
+
+EntityType<?> mob = ForgeRegistries.ENTITIES.getValue(new ResourceLocation("minecraft:zombie"));
+List<Item> items = Arrays.asList(Items.DIAMOND, Items.GOLD_INGOT);
+DropRateAPI.registerDrop(mob, 50, items, 1, 3);
+        </code>
+        <p>This registers a 50% chance for a zombie to drop between 1 to 3 diamonds or gold ingots.</p>
+
+        <h2>DropRateAPI Details</h2>
+        <p>The DropRateAPI provides methods to register and retrieve drop rates for entities. It uses an internal data structure to store drop configurations.</p>
+        
+        <h3>Registering Drops</h3>
+        <p>To register an entity drop, use the following method:</p>
+        <code>
+public static void registerDrop(EntityType<?> mob, int rate, List<Item> items, int minAmount, int maxAmount)
+        </code>
+        <ul>
+            <li><strong>mob</strong>: The entity type (e.g., zombie, skeleton) for which the drop applies.</li>
+            <li><strong>rate</strong>: The percentage chance (0-100) that the drop will occur.</li>
+            <li><strong>items</strong>: A list of item objects that the entity can drop.</li>
+            <li><strong>minAmount</strong>: The minimum number of items dropped.</li>
+            <li><strong>maxAmount</strong>: The maximum number of items dropped.</li>
+        </ul>
+        
+        <h3>Retrieving Drop Data</h3>
+        <p>To retrieve drop data for a specific entity, use the following method:</p>
+        <code>
+public static List<DropData> getDropData(EntityType<?> mob)
+        </code>
+        <p>This method returns a list of <code>DropData</code> objects associated with the specified entity.</p>
+        
+        <h3>DropData Structure</h3>
+        <p>The DropData class encapsulates information about a registered drop.</p>
+        <code>
+public static class DropData {
+    public final int rate;
+    public final List<Item> items;
+    public final int minAmount;
+    public final int maxAmount;
+    
+    public DropData(int rate, List<Item> items, int minAmount, int maxAmount) {
+        this.rate = rate;
+        this.items = items;
+        this.minAmount = minAmount;
+        this.maxAmount = maxAmount;
+    }
+}
+        </code>
+        <p>Each <code>DropData</code> object contains the drop rate, item list, and min/max amounts for an entity drop.</p>
+        
+        <h3>Example: Retrieving Drops for an Entity</h3>
+        <code>
+EntityType<?> mob = ForgeRegistries.ENTITIES.getValue(new ResourceLocation("minecraft:skeleton"));
+List<DropRateAPI.DropData> drops = DropRateAPI.getDropData(mob);
+for (DropRateAPI.DropData drop : drops) {
+    System.out.println("Drop Rate: " + drop.rate + "%");
+    for (Item item : drop.items) {
+        System.out.println("Item: " + item.getDescriptionId());
+    }
+    System.out.println("Amount: " + drop.minAmount + " - " + drop.maxAmount);
+}
+        </code>
+        <p>This example retrieves all drop data associated with skeletons and prints the drop rate, item list, and amounts.</p>
+
+        <h2>DropRateAPI Fields</h2>
+        <table>
+            <tr>
+                <th>Modifier and Type</th>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>private static final</td>
+                <td>Map&lt;EntityType&lt;?&gt;, List&lt;DropData&gt;&gt; dropRules</td>
+                <td>Stores the drop rules for different entity types.</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
