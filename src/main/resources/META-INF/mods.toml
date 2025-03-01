@@ -6,6 +6,7 @@ license="MIT"  # License for your mod
 modId="droprateapi"  # Unique identifier for your mod
 version="${file.jarVersion}"  # Automatically uses the version from build.gradle
 displayName="Drop Rate Modifier API"  # Display name in the mod list
+logoFile="Drop_Rate.png"  # Logo file in the assets folder
 credits="Developed by TamKungZ_"  # Credits section
 authors="TamKungZ_"  # Author name
 description='''

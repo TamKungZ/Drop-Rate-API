@@ -22,6 +22,7 @@ public class DropRateAPI {
         return dropRules.getOrDefault(mob, Collections.emptyList());
     }
 
+    // Inner class to store drop data
     public static class DropData {
         public final int rate;
         public final List<Item> items;
@@ -35,4 +36,13 @@ public class DropRateAPI {
             this.maxAmount = maxAmount;
         }
     }
+
+    // Remove DropData from the list
+    public static void removeDrop(EntityType<?> mob, Item item) {
+        List<DropData> dropList = dropRules.get(mob);
+        if (dropList != null) {
+            dropList.removeIf(dropData -> dropData.items.contains(item));
+            System.out.println("Removed Drop: " + item + " from " + mob);
+        }
+    }    
 }

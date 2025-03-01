@@ -28,69 +28,82 @@ public class DropRateConfigLoader {
             createExampleConfig();
             return;
         }
-
+    
         try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
             JsonObject json = new JsonParser().parse(reader).getAsJsonObject();
             JsonArray configArray = json.getAsJsonArray("config");
-
+    
             if (configArray == null || configArray.size() == 0) {
+                System.err.println("[DropRate] WARNING: Config file is empty or missing 'config' section.");
                 return;
             }
-
+    
             for (JsonElement element : configArray) {
                 JsonObject obj = element.getAsJsonObject();
                 String mobId = obj.get("mob").getAsString();
                 int rate = obj.get("rate").getAsInt();
                 JsonArray itemArray = obj.getAsJsonArray("item");
-
+    
                 // Parse item amount (default to 1 if missing)
                 int minAmount = 1;
                 int maxAmount = 1;
                 if (obj.has("item_amount")) {
                     JsonElement amountElement = obj.get("item_amount");
                     if (amountElement.isJsonObject()) {
-                        // Handle { "min_amount": X, "max_amount": Y }
                         JsonObject amountObj = amountElement.getAsJsonObject();
                         minAmount = amountObj.get("min_amount").getAsInt();
                         maxAmount = amountObj.get("max_amount").getAsInt();
                     } else {
-                        // Handle fixed amount (e.g., "item_amount": 4)
                         minAmount = amountElement.getAsInt();
                         maxAmount = minAmount;
                     }
                 }
-
+    
                 // Ensure valid amounts
                 if (minAmount > maxAmount) {
                     int temp = minAmount;
                     minAmount = maxAmount;
                     maxAmount = temp;
                 }
-                minAmount = Math.max(1, Math.min(minAmount, 64)); // Clamp to 1-64
+                minAmount = Math.max(1, Math.min(minAmount, 64));
                 maxAmount = Math.max(1, Math.min(maxAmount, 64));
-
+    
+                // Validate EntityType
                 EntityType<?> mob = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mobId));
+                if (mob == null) {
+                    System.err.println("[DropRate] ERROR: Invalid mob ID '" + mobId + "'. Skipping entry.");
+                    continue;
+                }
+    
+                // Validate Items
                 List<Item> items = new ArrayList<>();
-
                 for (JsonElement itemElement : itemArray) {
                     String itemId = itemElement.getAsString();
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
-                    if (item != null) {
+                    if (item == null) {
+                        System.err.println("[DropRate] ERROR: Invalid item ID '" + itemId + "' for mob '" + mobId + "'. Skipping item.");
+                    } else {
                         items.add(item);
                     }
                 }
-
-                if (mob != null && !items.isEmpty()) {
+    
+                if (!items.isEmpty()) {
                     DropRateAPI.registerDrop(mob, rate, items, minAmount, maxAmount);
-                    System.out.println("Loaded config: Mob=" + mob + ", Rate=" + rate + 
-                        ", Items=" + items + ", Amount=" + minAmount + "-" + maxAmount);
+                    System.out.println("[DropRate] Loaded config: Mob=" + mobId + ", Rate=" + rate + ", Items=" + items + ", Amount=" + minAmount + "-" + maxAmount);
+                } else {
+                    System.err.println("[DropRate] WARNING: No valid items found for mob '" + mobId + "'. Skipping drop registration.");
                 }
             }
-
-        } catch (IOException | JsonSyntaxException e) {
+    
+        } catch (IOException e) {
+            System.err.println("[DropRate] ERROR: Failed to read the config file!");
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
+            System.err.println("[DropRate] ERROR: Invalid JSON syntax in the config file!");
             e.printStackTrace();
         }
     }
+
 
     private static void createExampleConfig() {
         JsonObject exampleConfig = new JsonObject();
