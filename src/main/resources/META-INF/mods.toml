@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[36,)"  # Compatible with Forge 36.x.x
-license="MIT"  # License for your mod
+license="GPLv3"  # License for your mod
 
 [[mods]]
 modId="droprateapi"  # Unique identifier for your mod
