@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[36,)"  # Compatible with Forge 36.x.x
+license="MIT"  # License for your mod
+
+[[mods]]
+modId="droprateapi"  # Unique identifier for your mod
+version="${file.jarVersion}"  # Automatically uses the version from build.gradle
+displayName="Drop Rate Modifier API"  # Display name in the mod list
+credits="Developed by TamKungZ_"  # Credits section
+authors="TamKungZ_"  # Author name
+description='''
+This mod allows modifying drop rates for specific mobs.
+Players and modders can configure custom drop rules via JSON or API.
+'''
+
+# Dependencies
+[[dependencies.droprateapi]]
+    modId="forge"  # Requires Forge
+    mandatory=true  # Forge is required
+    versionRange="[36,)"  # Compatible with Forge 36.x.x
+    ordering="NONE"  # No specific load order
+    side="BOTH"  # Works on both client and server
+
+[[dependencies.droprateapi]]
+    modId="minecraft"  # Requires Minecraft
+    mandatory=true  # Minecraft is required
+    versionRange="[1.16.5,1.17)"  # Compatible with Minecraft 1.16.5
+    ordering="NONE"  # No specific load order
+    side="BOTH"  # Works on both client and server
