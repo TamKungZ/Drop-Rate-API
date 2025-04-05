@@ -95,7 +95,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPages"
-            url = uri("file://${projectDir}/docs/maven")
+            url = uri("${buildDir}/repo") // output ไปยัง build/repo
         }
     }
 }
