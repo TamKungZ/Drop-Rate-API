@@ -1,0 +1,84 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "th.tamkungz.droprateapi",
+    "module": "droprateapi",
+    "version": "1.0.1-patch1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.3.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "droprateapi-1.0.1-patch1.jar",
+          "url": "droprateapi-1.0.1-patch1.jar",
+          "size": 21548,
+          "sha512": "98c923c7fd1c3748517a3f671cf38b8147d5e55f18c3a7ca7a306d456fab628299b1f9bb7a04abbfbd1e0ea6dbf8783badda689d7a894cbc99a0b1ab87ae65aa",
+          "sha256": "6328ad098c859bd184efd381a4b7e2114dde2972a22980aa73401a92de0a02b2",
+          "sha1": "67ae3c80d49bd6f004034c0445eea9f97621ac93",
+          "md5": "d0b6c806c6de9400c6b28dbf3f3b09bd"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "net.minecraftforge",
+          "module": "forge",
+          "version": {
+            "requires": "1.16.5-36.2.34_mapped_official_1.16.5"
+          }
+        },
+        {
+          "group": "net.minecraftforge",
+          "module": "forge",
+          "version": {
+            "requires": "1.16.5-36.2.34_mapped_official_1.16.5"
+          },
+          "thirdPartyCompatibility": {
+            "artifactSelector": {
+              "name": "forge",
+              "type": "jar",
+              "extension": "jar",
+              "classifier": "launcher"
+            }
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "droprateapi-1.0.1-patch1.jar",
+          "url": "droprateapi-1.0.1-patch1.jar",
+          "size": 21548,
+          "sha512": "98c923c7fd1c3748517a3f671cf38b8147d5e55f18c3a7ca7a306d456fab628299b1f9bb7a04abbfbd1e0ea6dbf8783badda689d7a894cbc99a0b1ab87ae65aa",
+          "sha256": "6328ad098c859bd184efd381a4b7e2114dde2972a22980aa73401a92de0a02b2",
+          "sha1": "67ae3c80d49bd6f004034c0445eea9f97621ac93",
+          "md5": "d0b6c806c6de9400c6b28dbf3f3b09bd"
+        }
+      ]
+    }
+  ]
+}
