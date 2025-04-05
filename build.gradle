@@ -86,20 +86,16 @@ jar.finalizedBy('reobfJar')
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // Publish the jar artifact
             artifact jar
+            groupId = project.group
+            artifactId = archivesBaseName
+            version = project.version
         }
     }
     repositories {
         maven {
-            name = "GitHubPackages"
-            // Use your GitHub Packages Maven repository URL
-            url = uri("https://maven.pkg.github.com/TamKungZ/droprateapi")
-            credentials {
-                // Credentials provided via environment variables or Gradle properties
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
-            }
+            name = "GitHubPages"
+            url = uri("file://${projectDir}/docs/maven")
         }
     }
 }
