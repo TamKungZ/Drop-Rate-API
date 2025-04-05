@@ -86,16 +86,15 @@ jar.finalizedBy('reobfJar')
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
-            groupId = project.group
-            artifactId = archivesBaseName
-            version = project.version
+            from components.java
+            groupId = 'th.tamkungz.droprateapi'
+            artifactId = 'droprateapi'
+            version = '1.0.1-patch1'
         }
     }
     repositories {
         maven {
-            name = "GitHubPages"
-            url = uri("${buildDir}/repo") // output ไปยัง build/repo
+            url = uri("$rootDir/docs/maven")
         }
     }
 }
