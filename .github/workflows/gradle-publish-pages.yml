@@ -1,4 +1,4 @@
-name: Publish Maven to GitHub Pages
+name: Publish Maven to GitHub Pages (via /docs in 1.16.5-Forge)
 
 on:
   release:
@@ -9,9 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
-      - name: Checkout repository
+      - name: Checkout 1.16.5-Forge branch
         uses: actions/checkout@v4
+        with:
+          ref: 1.16.5-Forge
+          fetch-depth: 0
 
       - name: Set up JDK 8
         uses: actions/setup-java@v4
@@ -25,18 +29,15 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Publish to local Maven repo (docs/maven)
+      - name: Publish to Maven (outputs to docs/)
         run: ./gradlew publish
 
-      - name: Copy Maven files to docs/ if not already
-        run: |
-          mkdir -p docs
-          cp -r build/repo docs/maven || true
-
-      - name: Push to GitHub Pages (docs/)
+      - name: Commit updated docs/maven
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/
+          git add docs/maven
           git commit -m "Publish Maven package to GitHub Pages [CI]" || echo "No changes to commit"
-          git push origin HEAD:${{ github.ref_name }}
+
+      - name: Push changes to 1.16.5-Forge branch
+        run: git push origin 1.16.5-Forge
