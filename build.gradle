@@ -94,7 +94,7 @@ publishing {
         maven {
             name = "GitHubPackages"
             // Use your GitHub Packages Maven repository URL
-            url = uri("https://maven.pkg.github.com/TamKungZ/Drop-Rate-API")
+            url = uri("https://maven.pkg.github.com/TamKungZ/droprateapi")
             credentials {
                 // Credentials provided via environment variables or Gradle properties
                 username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
