@@ -1,17 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dynamic File Explorer</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <title>Drop Rate API Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+        pre { background: #333; color: #fff; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .note { color: #666; font-style: italic; }
+    </style>
 </head>
 <body>
-  <div id="file-explorer">
-    <h1>File Explorer</h1>
-    <div id="file-tree">Loading file structure...</div>
-  </div>
+    <h1>Drop Rate API Mod</h1>
+    <p>A Minecraft Forge mod for managing custom mob drops with JSON configuration and API integration.</p>
 
-  <script src="script.js"></script>
+    <h2>Features</h2>
+    <ul>
+        <li>🗸 Customizable mob drop rates and items via JSON config</li>
+        <li>🗸 Multiple items per mob with quantity ranges</li>
+        <li>🗸 In-game <code>/droprate_reload</code> command</li>
+        <li>🗸 Developer API for mod integration</li>
+        <li>🗸 Configurable drop chances (1-100%)</li>
+    </ul>
+
+    <h2>Installation</h2>
+    <p>Add to your <code>build.gradle</code>:</p>
+    <pre>
+repositories {
+    maven {
+        url "https://cursemaven.com"
+    }
+}
+
+dependencies {
+    implementation fg.deobf("curse.maven:drop-rate-api-1208468:6249868")
+}</pre>
+
+    <h2>Configuration</h2>
+    <p>Create <code>config/droprate.config.json</code>:</p>
+    <pre>
+{
+    "config": [
+        {
+            "mob": "minecraft:zombie",
+            "rate": 80,
+            "item": ["minecraft:apple"],
+            "item_amount": {
+                "min_amount": 1,
+                "max_amount": 3
+            }
+        }
+    ]
+}</pre>
+
+    <h3>Config Fields</h3>
+    <table>
+        <tr><th>Field</th><th>Description</th></tr>
+        <tr><td><code>mob</code></td><td>Entity ID (e.g., "minecraft:skeleton")</td></tr>
+        <tr><td><code>rate</code></td><td>Drop chance (1-100)</td></tr>
+        <tr><td><code>item</code></td><td>Array of item IDs</td></tr>
+        <tr><td><code>item_amount</code></td><td>Number (fixed) or {min_amount, max_amount}</td></tr>
+    </table>
+    <p class="note">Note: Amounts are clamped between 1-64 automatically</p>
+
+    <h2>Commands</h2>
+    <p><strong><code>/droprate_reload</code></strong> - Reload config without restarting</p>
+
+    <h2>API Usage</h2>
+    <h3>Register Drops Programmatically</h3>
+    <pre>
+DropRateAPI.registerDrop(
+    EntityType.ZOMBIE, // Mob type
+    75,                // 75% drop chance
+    Arrays.asList(Items.DIAMOND, Items.EMERALD), // Items
+    1,                 // Min amount
+    5                  // Max amount
+);</pre>
+
+    <h3>Remove Drops</h3>
+    <pre>
+// Remove all diamond drops from zombies
+DropRateAPI.removeDrop(EntityType.ZOMBIE, Items.DIAMOND);</pre>
+
+    <h2>Example Configurations</h2>
+    <h3>Multiple Items with Fixed Amount</h3>
+    <pre>
+{
+    "mob": "minecraft:creeper",
+    "rate": 100,
+    "item": ["minecraft:gunpowder", "minecraft:tnt"],
+    "item_amount": 2
+}</pre>
+
+    <h3>Random Quantity Range</h3>
+    <pre>
+{
+    "mob": "minecraft:enderman",
+    "rate": 40,
+    "item": ["minecraft:ender_pearl"],
+    "item_amount": {
+        "min_amount": 2,
+        "max_amount": 5
+    }
+}</pre>
+
+    <h2>Event Handling</h2>
+    <p>Drops are processed in <code>MobDeathHandler</code> during the <code>LivingDeathEvent</code>. Each drop entry is evaluated independently.</p>
+
+    <footer>
+        <p>📜 License: GNU GPLv3 | Created by TamKungZ_</p>
+    </footer>
 </body>
 </html>
