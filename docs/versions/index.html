@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <title>API Maven Versions</title>
+  <style>
+    body {
+      font-family: 'DejaVu Sans', Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+    }
 
+    h2 {
+      color: #2e5496;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    .header-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr) auto;
+      padding: 10px 15px;
+      border: 1px solid #c6d4ee;
+      background-color: #f2f6fc;
+      font-weight: bold;
+      border-left: 4px solid #4a6da7;
+      color: #2e5496;
+    }
+
+    .header-row div,
+    .accordion div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .accordion {
+      background-color: #ffffff;
+      color: #2e5496;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr) auto;
+      align-items: center;
+      padding: 10px 15px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-left: 4px solid #4a6da7;
+      text-align: left;
+      font-size: 16px;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      border-radius: 4px;
+    }
+
+    .accordion:hover,
+    .accordion.active {
+      background-color: #e6effc;
+      transform: scale(1.02);
+    }
+
+    .accordion .arrow {
+      font-size: 18px;
+      justify-self: end; /* แยกลูกศรไปขวาสุด */
+      text-align: right;
+    }
+
+    .panel {
+      padding: 15px 20px;
+      background-color: #fff;
+      display: none;
+      border: 1px solid #ddd;
+      border-top: none;
+      border-left: 4px solid #4a6da7;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    code {
+      background: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: 'DejaVu Sans Mono', monospace;
+    }
+
+    @media (max-width: 768px) {
+      .header-row {
+        grid-template-columns: repeat(3, 1fr) auto;
+      }
+      
+      .accordion {
+        grid-template-columns: repeat(3, 1fr) auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>API Maven Version</h2>
+
+  <!-- Header Row -->
+  <div class="header-row">
+    <div>modid</div>
+    <div>projectid</div>
+    <div>fileid</div>
+    <div>loader</div>
+    <div>mc</div>
+    <div>modver</div>
+    <div></div> <!-- arrow -->
+  </div>
+
+  <!-- Accordion Row -->
+  <button class="accordion" aria-expanded="false">
+    <div>droprateapi</div>
+    <div>1208468</div>
+    <div>6249868</div>
+    <div>forge</div>
+    <div>1.16.5</div>
+    <div>1.0.1+patch1</div>
+    <div class="arrow">▼</div>
+  </button>
+  <div class="panel">
+    <p>Based on:</p>
+    <pre><code>implementation fg.deobf("curse.maven:droprateapi-1208468:6249868")</code></pre>
+
+    <p><strong>Changelog:</strong></p>
+    <ul>
+      <li>Initial release with basic functionality.</li>
+    </ul>
+
+    <p><strong>Usage:</strong> Add the implementation line to your <code>build.gradle</code>.</p>
+  </div>
+  
+  <button class="accordion" aria-expanded="false">
+    <div>droprateapi</div>
+    <div>1208468</div>
+    <div>6249706</div>
+    <div>forge</div>
+    <div>1.16.5</div>
+    <div>1.0.1</div>
+    <div class="arrow">▼</div>
+  </button>
+  <div class="panel">
+    <p>Based on:</p>
+    <pre><code>implementation fg.deobf("curse.maven:droprateapi-1208468:6249706")</code></pre>
+
+    <p><strong>Changelog:</strong></p>
+    <ul>
+      <li>Initial release with basic functionality.</li>
+    </ul>
+
+    <p><strong>Usage:</strong> Add the implementation line to your <code>build.gradle</code>.</p>
+  </div>
+
+  <script>
+    const acc = document.querySelectorAll(".accordion");
+
+    acc.forEach(btn => {
+      btn.addEventListener("click", function () {
+        const panel = this.nextElementSibling;
+        const arrow = this.querySelector(".arrow");
+        const isOpen = panel.style.display === "block";
+        
+        // Toggle panel display
+        panel.style.display = isOpen ? "none" : "block";
+        // Update arrow symbol
+        arrow.textContent = isOpen ? "▼" : "▲";
+        // Update aria-expanded attribute for accessibility
+        this.setAttribute("aria-expanded", !isOpen);
+
+        // Optionally close other panels
+        acc.forEach(otherBtn => {
+          if (otherBtn !== btn) {
+            const otherPanel = otherBtn.nextElementSibling;
+            otherPanel.style.display = "none";
+            otherBtn.querySelector(".arrow").textContent = "▼";
+            otherBtn.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
