@@ -1,0 +1,40 @@
+{
+    // Example configuration for DropRate mod
+    "config": [
+        // Uncomment the entries below to enable them
+        // 
+        // Example 1: Zombie drops apples (80% chance, 1 apple)
+        // {
+        //     "mob": "minecraft:zombie",
+        //     "rate": 80,
+        //     "item": ["minecraft:apple"]
+        // },
+        // 
+        // Example 2: Zombie drops nuggets (100% chance, 1 nugget)
+        // {
+        //     "mob": "minecraft:zombie",
+        //     "rate": 100,
+        //     "item": ["minecraft:gold_nugget", "minecraft:iron_nugget"],
+        //     "item_amount": 1
+        // },
+        // 
+        // Example 3: Chicken drops stone (50% chance, 4 stones)
+        // {
+        //     "mob": "minecraft:chicken",
+        //     "rate": 50,
+        //     "item": ["minecraft:stone"],
+        //     "item_amount": 4
+        // },
+        // 
+        // Example 4: Chicken drops arrows (90% chance, 1-7 arrows)
+        // {
+        //     "mob": "minecraft:chicken",
+        //     "rate": 90,
+        //     "item": ["minecraft:arrow"],
+        //     "item_amount": {
+        //         "min_amount": 1,
+        //         "max_amount": 7
+        //     }
+        // }
+    ]
+}
