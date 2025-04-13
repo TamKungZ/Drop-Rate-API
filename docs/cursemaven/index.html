@@ -1,1 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drop Rate API Documentation</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        code { background: #f0f0f0; padding: 2px 5px; border-radius: 3px; }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }
+        .note { color: #6c757d; border-left: 4px solid #6c757d; padding: 15px; margin: 20px 0; }
+        h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <h1>CurseMaven Integration Guide</h1>
 
+    <div class="note">
+        <strong>ℹ️ Before You Start:</strong>
+        <ul>
+            <li>Ensure you're using Gradle 5+</li>
+            <li>Verify file IDs on CurseForge</li>
+            <li>Always refresh dependencies after changes</li>
+        </ul>
+    </div>
+
+    <h2>1. Repository Setup</h2>
+    <p>Add to your <code>build.gradle</code>:</p>
+    <pre>
+repositories {
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}</pre>
+
+    <h2>2. Dependency Syntax</h2>
+    <p>Basic format:</p>
+    <pre>implementation fg.deobf("curse.maven:&lt;projectname&gt;-&lt;projectid&gt;:&lt;fileid&gt;")</pre>
+
+    <table>
+        <tr><th>Part</th><th>Description</th><th>Example</th></tr>
+        <tr><td>projectname</td><td>Mod slug (for readability)</td><td>drop-rate-api</td></tr>
+        <tr><td>projectid</td><td>CurseForge project ID</td><td>1208468</td></tr>
+        <tr><td>fileid</td><td>Specific file ID</td><td>6249868</td></tr>
+    </table>
+
+    <h2>3. Finding IDs</h2>
+    <h3>Project ID</h3>
+    <p>Found in the "About Project" section:</p>
+    <img src="https://i.imgur.com/6Jk8LpM.png" alt="Project ID location" style="max-width: 100%; border: 1px solid #ddd;">
+
+    <h3>File ID</h3>
+    <p>Visible in file download URLs:</p>
+    <pre>https://www.curseforge.com/minecraft/mc-mods/drop-rate-api/download/<strong>6249868</strong></pre>
+
+    <div class="warning">
+        <strong>⚠️ Common Issues:</strong>
+        <ul>
+            <li>403 Errors: Verify repository configuration</li>
+            <li>Missing files: Check file ID validity</li>
+            <li>Version mismatches: Ensure MC version compatibility</li>
+        </ul>
+    </div>
+
+    <h2>4. Advanced Usage</h2>
+    <h3>Multiple Files/Classifiers</h3>
+    <pre>implementation fg.deobf("curse.maven:ctm-267602:2642375-sources-2642376")</pre>
+
+    <h3>Sequential IDs</h3>
+    <pre>implementation fg.deobf("curse.maven:jei-238222:2724420-api-config")</pre>
+    <p>Translates to:</p>
+    <ul>
+        <li>2724420 - Main file</li>
+        <li>2724421 - API</li>
+        <li>2724422 - Config</li>
+    </ul>
+
+    <h2>5. Verification</h2>
+    <p>Test your configuration at:</p>
+    <pre>https://cursemaven.com/test/&lt;projectid&gt;/&lt;fileid&gt;</pre>
+    <p>Example: <a href="https://cursemaven.com/test/1208468/6249868">https://cursemaven.com/test/1208468/6249868</a></p>
+    
+    <h2>6. build.gradle Example</h2>
+    <p>Example can "BUILD SUCCESSFUL"</p>
+    <pre>
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+    }
+}
+
+plugins {
+    id 'eclipse'
+    id 'maven-publish'
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+
+version = '1.0.0'
+group = 'com.example.mod'
+archivesBaseName = 'examplemod'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+minecraft {
+    mappings channel: 'official', version: '1.16.5'
+    
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
+
+    // Drop Rate API (CurseForge ID: 1208468, File ID: 6249868)
+    implementation fg.deobf("curse.maven:drop-rate-api-1208468:6249868")
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "examplemod",
+            "Specification-Vendor": "examplevendor",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor": "examplevendor",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+    </pre>
+    
+    <h2>Complete Example</h2>
+    <pre>
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
+    
+    // Drop Rate API (1.16.5)
+    implementation fg.deobf("curse.maven:drop-rate-api-1208468:6249868")
+    
+    // JEI with sources
+    implementation fg.deobf("curse.maven:jei-238222:2724420-sources-2724421")
+}</pre>
+
+    <div class="note">
+        <strong>📚 Pro Tips:</strong>
+        <ul>
+            <li>Use <code>--refresh-dependencies</code> flag after changes</li>
+            <li>Check dependency tree with <code>./gradlew dependencies</code></li>
+            <li>ForgeGradle users must use <code>fg.deobf()</code></li>
+        </ul>
+    </div>
+
+    <footer style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
+        <p>CurseMaven is not affiliated with CurseForge. Documentation updated: August 2023</p>
+    </footer>
+</body>
+</html>
