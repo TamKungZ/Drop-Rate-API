@@ -143,10 +143,10 @@ DropRateAPI.registerDrop(
 );
 
 // Query existing drops
-List&lt;DropData&gt; drops = DropRateAPI.getDropData(EntityType.SKELETON);
+List&lt;DropData&gt; drops = DropRateAPI.getDropData(EntityType.ZOMBIE);
 
 // Remove specific drops
-DropRateAPI.removeDrop(EntityType.CREEPER, Items.GUNPOWDER);</code></pre>
+DropRateAPI.removeDrop(EntityType.ZOMBIE, Items.EMERALD);</code></pre>
 
         <h3>Event Integration</h3>
         <pre><code class="language-java">@SubscribeEvent
@@ -155,6 +155,28 @@ public void onMobDeath(LivingDeathEvent event) {
     List&lt;DropData&gt; drops = DropRateAPI.getDropData(event.getEntity().getType());
     
     // Custom drop logic here
+}</code></pre>
+        <h3>Simple Registing</h3>
+        <pre><code class="language-java">
+import th.tamkungz.droprateapi.api.DropRateAPI;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Items;
+import java.util.Arrays;
+import java.util.List;
+
+@Mod(MyMob.MOD_ID)
+public class MyMob {
+    public static final String MOD_ID = "MyMob";
+
+    public DropMyMob() {
+        DropRateAPI.registerDrop(
+            EntityType.PIG, // Mob type
+            75,                // 75% drop chance
+            Arrays.asList(Items.DIAMOND, Items.EMERALD), // Items
+            1,                 // Min amount
+            5                  // Max amount
+        );
+    }
 }</code></pre>
     </section>
 
