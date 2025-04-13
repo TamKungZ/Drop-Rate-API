@@ -1,27 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.8;
+        padding: 40px;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    h1, h2, h3 {
+        color: #2c3e50;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 5px;
+        margin-top: 40px;
+    }
+
+    h1 {
+        font-size: 2.4em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    h3 {
+        font-size: 1.4em;
+    }
+
+    p {
+        margin: 1em 0;
+    }
+
+    ul {
+        padding-left: 1.5em;
+    }
+
+    li {
+        margin: 0.5em 0;
+    }
+
+    code {
+        background-color: #eef1f4;
+        color: #c7254e;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+    }
+
+    pre {
+        background-color: #2d2d2d;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 0.95em;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+        background-color: white;
+    }
+
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    a.button-link {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        transition: background-color 0.3s;
+    }
+
+    a.button-link:hover {
+        background-color: #2980b9;
+    }
+
+    .note {
+        color: #666;
+        font-style: italic;
+        margin-top: 10px;
+    }
+
+    footer {
+        margin-top: 50px;
+        font-size: 0.9em;
+        color: #999;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+        text-align: center;
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Drop Rate API Documentation</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
-        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
-        pre { background: #333; color: #fff; padding: 10px; border-radius: 5px; overflow-x: auto; }
-        .note { color: #666; font-style: italic; }
-    </style>
-    <a href="lite-page.html" style="
-            display: inline-block;
-            background-color: #72cae0;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        ">Lite Page</a>
 </head>
 <body>
+    <a href="lite-page.html" class="button-link">Lite Page</a>
+
     <h1>Drop Rate API Mod</h1>
     <p>A Minecraft Forge mod for managing custom mob drops with JSON configuration and API integration.</p>
 
@@ -46,17 +142,8 @@ repositories {
 dependencies {
     implementation fg.deobf("curse.maven:drop-rate-api-1208468:6249868")
 }</pre>
-    <a href="CurseMaven.html" style="
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        ">View CurseMaven Guide</a>
+
+    <a href="CurseMaven.html" class="button-link" style="background-color: #27ae60;">View CurseMaven Guide</a>
 
     <h2>Configuration</h2>
     <p>Create <code>config/droprate.config.json</code>:</p>
