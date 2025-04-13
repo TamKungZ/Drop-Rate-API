@@ -1,123 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f9f9f9;
-        color: #333;
-        line-height: 1.8;
-        padding: 40px;
-        max-width: 900px;
-        margin: auto;
-    }
-
-    h1, h2, h3 {
-        color: #2c3e50;
-        border-bottom: 2px solid #e0e0e0;
-        padding-bottom: 5px;
-        margin-top: 40px;
-    }
-
-    h1 {
-        font-size: 2.4em;
-    }
-
-    h2 {
-        font-size: 1.8em;
-    }
-
-    h3 {
-        font-size: 1.4em;
-    }
-
-    p {
-        margin: 1em 0;
-    }
-
-    ul {
-        padding-left: 1.5em;
-    }
-
-    li {
-        margin: 0.5em 0;
-    }
-
-    code {
-        background-color: #eef1f4;
-        color: #c7254e;
-        padding: 3px 6px;
-        border-radius: 4px;
-        font-family: monospace;
-    }
-
-    pre {
-        background-color: #2d2d2d;
-        color: #f8f8f2;
-        padding: 15px;
-        border-radius: 8px;
-        overflow-x: auto;
-        font-size: 0.95em;
-    }
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        margin-top: 20px;
-        background-color: white;
-    }
-
-    table, th, td {
-        border: 1px solid #ddd;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f0f0f0;
-    }
-
-    a.button-link {
-        display: inline-block;
-        background-color: #3498db;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        transition: background-color 0.3s;
-    }
-
-    a.button-link:hover {
-        background-color: #2980b9;
-    }
-
-    .note {
-        color: #666;
-        font-style: italic;
-        margin-top: 10px;
-    }
-
-    footer {
-        margin-top: 50px;
-        font-size: 0.9em;
-        color: #999;
-        border-top: 1px solid #ddd;
-        padding-top: 20px;
-        text-align: center;
-    }
-</style>
 <head>
+    <meta charset="UTF-8">
+    <title>Drop Rate API Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: url('your-background-image-url.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            line-height: 1.8;
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+        
+        @keyframes buttonHover {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        a.button-link {
+            display: inline-block;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        a.button-link:hover {
+            animation: buttonHover 0.3s ease forwards;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.8;
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+        }
+    
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+    
+        h1 {
+            font-size: 2.4em;
+        }
+    
+        h2 {
+            font-size: 1.8em;
+        }
+    
+        h3 {
+            font-size: 1.4em;
+        }
+    
+        h4 {
+            font-size: 1.0em;
+        }
+    
+        p {
+            margin: 1em 0;
+        }
+    
+        ul {
+            padding-left: 1.5em;
+        }
+    
+        li {
+            margin: 0.5em 0;
+        }
+    
+        code {
+            background-color: #eef1f4;
+            color: #c7254e;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.95em;
+        }
+    
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            background-color: white;
+        }
+    
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+    
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+    
+        th {
+            background-color: #f0f0f0;
+        }
+    
+        a.button-link {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+    
+        a.button-link:hover {
+            background-color: #2980b9;
+        }
+    
+        .note {
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+    
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #999;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            text-align: center;
+        }
+    </style>
     <meta charset="UTF-8">
     <title>Drop Rate API Documentation</title>
 </head>
 <body>
-    <a href="lite-page/" class="button-link">Lite Page</a>
+    <a href="lite-page/" class="button-link" style="background-color: #27ae60;">Lite Page</a>
+    <a href="https://www.curseforge.com/minecraft/mc-mods/drop-rate-api/files/all?page=1&pageSize=20" class="button-link" style="background-color: #ff7105;">Versions</a>
+    <a href="https://github.com/TamKungZ/droprateapi" class="button-link" style="background-color: #333333;">GitHub</a>
 
     <h1>Drop Rate API Mod</h1>
     <p>A Minecraft Forge mod for managing custom mob drops with JSON configuration and API integration.</p>
@@ -177,6 +235,16 @@ dependencies {
     <p><strong><code>/droprate_reload</code></strong> - Reload config without restarting</p>
 
     <h2>API Usage</h2>
+    <h3>API Package</h3>
+    <h4>Import</h4>
+    <pre>import th.tamkungz.droprateapi.api.DropRateAPI;</pre>
+    <h4>Requirement (1.16.5)</h4>
+    <pre>
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Items;
+import java.util.Arrays;
+    </pre>
+
     <h3>Register Drops Programmatically</h3>
     <pre>
 DropRateAPI.registerDrop(
